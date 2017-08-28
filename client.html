@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+p:nth-child(odd) {
+    background: #a40b5d;
+    color: #fff;
+}
+
+p:nth-child(even) {
+    background: #e43930;
+    color: #fff;
+}
+</style>
+
+<body>
+    <input type="text" onblur="wsServer.onopen(this.value)">
+    <div id="change">更改</div>
+    <div id="text"></div>
+    <script type="text/javascript">
+    var wsServer = new WebSocket('ws://127.0.0.1:8052')
+    wsServer.onopen = function(e) {
+
+        (typeof e == 'string') && wsServer.send(e); //向后台发送数据
+       document.getElementById("change").addEventListener("click",
+            function(){
+                var a ={"name":"duke"}
+                wsServer.send(JSON.stringify(a))
+            }
+       ) 
+    };
+    wsServer.onclose = function(e) { //当链接关闭的时候触发
+
+    };
+    wsServer.onmessage = function(e) { //后台返回消息的时候触发
+
+         console.log(e.data);
+        var p = document.createElement("p")
+        p.innerHTML = e.data;
+
+        document.getElementById('text').appendChild(p)
+    };
+    wsServer.onerror = function(e) { //错误情况触发
+        console.log('连接终止了')
+    }
+
+
+    
+     
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+p{
+	text-decoration: underline;
+	color: #a40b5d;
+}
+.main{
+	padding: 10px;
+}
+.content{
+	margin-top: 10px;
+}
+.list-title {
+    display: flex;
+    height: 30px;
+    line-height: 30px;
+}
+
+.list-item {
+    text-align: center;
+    flex: 1;
+} 
+.history a{
+	display: block;
+}
+</style>
+
+<body>
+    <div class="main">
+    	<div id="systemInfo"></div>
+		<div class="content"></div>
+		<div class="history">
+			<a href="#/index">首页</a>
+			<a href="#/product">产品</a>
+		</div>
+    </div>
+    <div id="out"></div>
+    <link href="./client.html">
+    <script type="text/template" id="code">
+	    <div class="code-html">
+	        <div class="list-title">
+	            <div class="list-item">名称</div>
+	            <div class="list-item">代码</div>
+	            <div class="list-item">价格</div>
+	        </div>
+	        <ul>
+	        	
+	            <li class="list-title">
+	                <div class="list-item">${name}</div>
+	                <div class="list-item">${code}</div>
+	                <div class="list-item">${price}</div>
+	            </li>
+	          
+	        </ul>
+	    </div>
+	    
+	  </script>  
+    
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/juicer.js"></script>
+    <script>
+    	
+    	function Route(){
+
+		}
+		Route.prototype.open=function(route,callback){
+		    var arr={};
+		    arr[route]=callback;
+		 
+		    window.addEventListener('popstate',function(){
+		      var temp=window.location.hash;
+		      for(var i in arr){
+		        if(i==temp.slice(1,temp.length)){
+		          arr[i]();
+		        }
+		      }
+		    })
+		  }
+		window.Route=new Route();
+
+		Route.open('/',function(){
+		    
+		});
+		Route.open('/main',function(){
+		    console.log("main")
+		});
+		Route.open('/index',function(){
+		    console.log("index")
+		});
+		Route.open('/product',function(){
+		    
+		});
+
+    	// window.addEventListener("popstate",()=>{
+    	// 	console.log(history.length)
+    	// 	console.log(history.state)
+    	// 	//获取hash后面的路由
+    	// 	var hsah = window.location.hash.slice(1);
+    	// },false)
+    	var panel = {
+		    // 软压板信息
+		    "softdata": [
+		        { "id": 252, "status": 0, "name": "设备检修" },
+		        { "id": 253, "status": 1, "name": "远方就地压板" },
+		        { "id": 254, "status": 1, "name": "设备故障" },
+		        { "id": 255, "status": 0, "name": "设备检修" }
+		    ],
+		    // 硬压板信息
+		    "harddata": [
+		        { "id": 252, "status": 0, "name": "光纤通道一软压板" },
+		        { "id": 253, "status": 1, "name": "光纤通道二软压板" },
+		        { "id": 254, "status": 1, "name": "距离保护软丫板" },
+		        { "id": 255, "status": 0, "name": "设备检修" },
+		        { "id": 252, "status": 0, "name": "设备检修" },
+		        { "id": 253, "status": 1, "name": "远方就地压板" },
+		        { "id": 254, "status": 1, "name": "设备故障" },
+		        { "id": 255, "status": 0, "name": "设备检修" },
+		        { "id": 252, "status": 1, "name": "设备检修" },
+		        { "id": 253, "status": 1, "name": "远方就地压板" },
+		        { "id": 254, "status": 1, "name": "设备故障" },
+		        { "id": 255, "status": 0, "name": "设备检修" }
+		    ],
+		    // 告警光子牌信息
+		    "panelinfo": [{
+		            "id": 252,
+		            "name": "通信传动报警",
+		            "alarminfo": [
+		                { "memo": "通讯异常", "lasttime": "2017年8月14日14:33:57", "alarm": true },
+		                { "memo": "当期ip不稳定", "lasttime": "2017年8月14日14:47:01", "alarm": true },
+		                { "memo": "网络端口链接", "lasttime": "2017年8月14日14:46:56", "alarm": true }
+
+		            ]
+
+		        },
+		        { "id": 252, "alarm": false, "name": "保护启动", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": false, "name": "对时信号状态", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": false, "name": "对时服务状态", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": false, "name": "定值区切换", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": false, "name": "光纤通道一软压板", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": false, "name": "光纤通道一软压板", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": true, "name": "装置报警", "alarminfo": "装置报警", "lasttime": "2017年8月7日15:07:30" },
+		        { "id": 252, "alarm": false, "name": "光纤通道一软压板", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": false, "name": "sv检修不一致", "alarminfo": "", "lasttime": "" },
+		        { "id": 252, "alarm": true, "name": "SV总告警", "alarminfo": "电压不稳", "lasttime": "2017年8月7日15:07:30" },
+		        { "id": 252, "alarm": false, "name": "光纤通道一软压板", "alarminfo": "", "lasttime": "" }
+		    ],
+
+		    
+		    // 背板告警信息
+		    "panelblock": [
+		        { "id": 252, "alarm": true, "width": 50, "alarminfo": "" },
+		        {
+		            "id": 252,
+		            "alarm": false,
+		            "width": 100,
+		            "alarminfo": [
+		                { "sid": 14, "alarm": true },
+		                { "sid": 14, "alarm": false },
+		                { "sid": 14, "alarm": false },
+		                { "sid": 16, "alarm": false }
+		            ]
+		        },
+		        {
+		            "id": 252,
+		            "alarm": false,
+		            "width": 100,
+		            "alarminfo": [
+		                { "sid": 14, "alarm": false },
+		                { "sid": 14, "alarm": true },
+		                { "sid": 14, "alarm": false },
+		                { "sid": 16, "alarm": true }
+		            ]
+		        },
+
+		        { "id": 252, "alarm": false, "width": 50, "alarminfo": "" },
+		        { "id": 252, "alarm": false, "width": 50, "alarminfo": "" },
+		        { "id": 252, "alarm": false, "width": 50, "alarminfo": "" },
+		        { "id": 252, "alarm": true, "width": 50, "alarminfo": "" },
+		        { "id": 252, "alarm": false, "width": 50, "alarminfo": "" },
+		        { "id": 252, "alarm": false, "width": 150, "alarminfo": "" },
+		        { "id": 252, "alarm": true, "width": 50, "alarminfo": "" },
+		        { "id": 252, "alarm": false, "width": 50, "alarminfo": "" }
+		    ],
+		    // 主面板保护告警信息
+		    "alarmlamp": [
+		        { "id": 252, "alarm": false, "name": "闭锁" },
+		        { "id": 252, "alarm": false, "name": "断链" },
+		        { "id": 252, "alarm": false, "name": "CRC" },
+		        { "id": 252, "alarm": true, "name": "定值" },
+		        { "id": 252, "alarm": false, "name": "光口" },
+		        { "id": 252, "alarm": false, "name": "温度" },
+		        { "id": 252, "alarm": true, "name": "同源" },
+		        { "id": 252, "alarm": false, "name": "通讯" },
+		        { "id": 252, "alarm": false, "name": "差流" }
+		    ],
+		    // 面板灯指示信息
+		    "blocklamp": [
+		        { "id": 252, "alarm": false, "name": "运行" },
+		        { "id": 252, "alarm": false, "name": "异常" },
+		        { "id": 252, "alarm": false, "name": "检修" },
+		        { "id": 252, "alarm": true, "name": "纵联保护闭锁" },
+		        { "id": 252, "alarm": false, "name": "充电完成" },
+		        { "id": 252, "alarm": false, "name": "保护跳闸" },
+		        { "id": 252, "alarm": true, "name": "同重合闸" },
+		        { "id": 252, "alarm": false, "name": "运行" }
+		    ]
+		};
+		var psy = {
+		    "socket": [
+		        { "name": "中国北车", "code": "", "price": "$7.25" },
+		        { "name": "中国石油", "code": "", "price": "$4.25" },
+		        { "name": "中国移动", "code": "", "price": "$8.25" },
+		        { "name": "国家电网", "code": "", "price": "$6.25" },
+		        { "name": "中船重工", "code": "", "price": "$9.25" },
+		        { "name": "阿里巴巴", "code": "", "price": "$10.25" },
+		        { "name": "腾讯", "code": "", "price": "$10.25" },
+		        { "name": "苹果", "code": "", "price": "$10.25" },
+		        { "name": "甲骨文", "code": "", "price": "$10.25" },
+		        { "name": "推特", "code": "", "price": "$10.25" },
+		        { "name": "百度", "code": "", "price": "$10.25" },
+		        { "name": "华为", "code": "", "price": "$10.25" }
+		    ],
+
+		}
+
+	    var ws = new WebSocket('ws://127.0.0.1:8808/');
+	    
+	    //建立服务器连接
+	    ws.onopen = function() {
+	        $('#systemInfo').html('<p>和websocket服务器连接成功</p>');
+	        
+	    }
+
+	    //接收到服务器返回的数据
+	    ws.onmessage = function(e) {
+	        // console.log(JSON.parse(e.data))
+	        
+	        $(".content").html(juicer($("#code").html(),JSON.parse(e.data)))
+	       
+	        
+	    }
+
+	    //断开服务器连接
+	    ws.onclose = function() {
+	        $('#systemInfo').html('<p>WebSocket服务器连接关闭</p>');
+	    }
+
+	    //ws发生错误
+	    ws.onerror = function(e) {
+	        console.log(e);
+	        $('#systemInfo').html( '<p>WebSocket发生错误</p>');
+	    }
+
+	  
+	   	/**
+		 * 深度遍历
+		 * 复合的Json结构数据，JSON对象里面可以嵌套多层对象(数组或对象)
+		 */
+		 function deepTraverse(json){
+		  // 1. 变量为json对象：将key输出，value进行递归
+		     if(isType(json, "Object")){
+		          for(var key in json){
+		           $("#out").append(key + ' : ');
+		           if(isType(json[key], "Array") || isType(json[key], "Object")){
+		            $("#out").append("下面为子项内容<br/>");
+		           }
+		           deepTraverse(json[key]);
+		          }
+		     }
+		     // 2. 变量为json数组：逐个元素递归
+		     else if(isType(json, "Array")){
+		          for(var i=0; i<json.length; i++){
+		               var jsonObj = json[i];
+		               deepTraverse(jsonObj);
+		              // 遍历数组中的元素(为json对象)后输出：分隔线+一个换行符
+		              if(isType(jsonObj, "Object")){
+		                $("#out").append("------------------------<br/>");
+		               }
+		          }
+		     }
+		     // 3. 变量为简单数据类型：直接输出（递归函数的终止条件）
+		     else if(isType(json, "String") || isType(json, "Number") ||
+		      isType(json,"Boolean") || isType(json,"Null")){
+		          $("#out").append(json);
+		          $("#out").append("<br/>");
+		     }
+
+
+		 }
+		 // 辅助函数，JS判断变量类型
+		/**
+		  * 判断类型
+		  * @param obj 判断的变量
+		  * @param type 预期的类型
+		  */
+		  function isType(obj,type){
+		        return Object.prototype.toString.call(obj) ==="[object "+type+"]";
+		   }
+
+		   // deepTraverse(panel)
+
+		  
+
+		   
+    </script>
+</body>
+
+</html>

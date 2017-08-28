@@ -1,0 +1,21 @@
+{
+  "name": "websocket",
+  "version": "1.0.0",
+  "description": "websocket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "duke",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "fs": "0.0.1-security",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "less": "^2.7.2",
+    "mockjs": "^1.0.1-beta3",
+    "sass": "^1.0.0-beta.2"
+  }
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font: 13px Helvetica, Arial;
+        }
+        
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        form input {
+            border: 0;
+            padding: 10px;
+            width: 90%;
+            margin-right: .5%;
+        }
+        
+        form button {
+            width: 9%;
+            background: rgb(130, 224, 255);
+            border: none;
+            padding: 10px;
+        }
+        
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #messages li {
+            padding: 5px 10px;
+        }
+        
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vertical-center">
+        <div class="container">
+
+            <ul id="messages"></ul>
+            <form role="form" id="chat_form" onsubmit="sendMessage(); return false;">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="message" id="message" placeholder="Type text to echo in here" value="" />
+                </div>
+                <button type="button" id="send" class="btn btn-primary" onclick="sendMessage();">
+                    Send!
+                </button>
+            </form>
+        </div>
+    </div>
+    <br> 
+    <br>
+    <input type="text" id="input">
+
+    <br> 
+    <br>
+    <input type="text" id="input2" oninput="inputChange()">
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var ws = new WebSocket("ws://localhost:8808");
+        
+        ws.onopen = function(e) {
+            
+            console.log('Connection to server opened');
+            ws.send("Hello there!");
+        }
+        ws.onmessage = function(e) {
+            console.log(e)
+            console.log(e.data);
+        }
+
+        function sendMessage() {
+            ws.send($('#message').val());
+            var li = $("<li></li>");
+            li.html($('#message').val());
+           
+            $("#messages").append(li)
+        }
+
+        var input = document.getElementById("input");
+        var data = {};
+        Object.defineProperty(data, "name", {
+          configurable: true,
+          get: function(){
+              return input.value
+          },
+          set: function(newValue){
+            //this.value = newValue;
+            input.value = newValue;
+          }
+        })
+        data.name = "sss";
+        input.onchange = function(){
+          data.name = data.name;
+          console.log(data.name)
+        }
+
+
+        var input2 = document.getElementById("input2");
+        var a = {};
+        Object.defineProperty(a, "text", {
+          configurable: true,
+          get: function(){
+              return input2.value
+          },
+          set: function(newValue){
+            
+            input2.value = newValue;
+          }
+        })
+        a.text = "wangjian"
+        input2.oninput = function (){
+            a.text = a.text;
+            console.log(this.value)
+        }
+    </script>
+</body>
+
+</html>
